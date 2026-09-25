@@ -15,7 +15,7 @@ fun Application.configureRouting() {
             call.respondText("Hello")
         }
         get("/html-thymeleaf"){
-            call.respond(ThymeleafContent("index", mapOf("user" to ThymeleafUser(1, "user1"))))
+            call.respond(ThymeleafContent("index", mapOf("user" to "ThymeleafUser"(1, "user1"))))
         }
         get("/tasks") {
             val tasks = listOf(
