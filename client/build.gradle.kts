@@ -1,0 +1,29 @@
+val ktor_version: String by project
+val logback_version: String by project
+
+plugins {
+    kotlin("jvm")
+}
+
+group = "org.example"
+version = "1.0-SNAPSHOT"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // These are your original client dependencies
+    implementation("io.ktor:ktor-client-core:${ktor_version}")
+    implementation("io.ktor:ktor-client-cio:${ktor_version}")
+    implementation("ch.qos.logback:logback-classic:${logback_version}")
+    testImplementation(kotlin("test"))
+}
+
+kotlin {
+    jvmToolchain(24)
+}
+
+tasks.test {
+    useJUnitPlatform()
+}
