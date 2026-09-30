@@ -15,7 +15,7 @@ fun Application.configureRouting() {
             call.respondText("Hello")
         }
         get("/html-thymeleaf"){
-            call.respond(ThymeleafContent("index", mapOf("user" to "ThymeleafUser"(1, "user1"))))
+            call.respond(ThymeleafContent("index", mapOf("user" to "ThymeleafUser")))
         }
         get("/tasks") {
             val tasks = listOf(
@@ -23,7 +23,7 @@ fun Application.configureRouting() {
                 Task("play", "play with cat", Priority.Vital),
                 Task("shopping", "buy groceries", Priority.Medium)
             )
-            call.respond(ThymeleafContent("all tasks", mapOf("tasks" to tasks)))
+            call.respond(ThymeleafContent("taskss", mapOf("tasks" to tasks)))
         }
         staticResources("/static", "static")
     }
