@@ -52,3 +52,4 @@ document.getElementById('task-form').addEventListener('submit', function(event) 
         })
         .catch(error => console.error("Error saving task:", error));
 });
+
