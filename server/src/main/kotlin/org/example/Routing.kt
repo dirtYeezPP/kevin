@@ -1,10 +1,13 @@
 package org.example
 
+import kotlinx.serialization.*
+import kotlinx.serialization.json.*
+
 import io.ktor.server.application.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.http.content.*
-import io.ktor.server.thymeleaf.ThymeleafContent
+import kotlinx.serialization.builtins.ListSerializer
 import org.example.model.Task
 import org.example.model.Priority
 
@@ -14,16 +17,13 @@ fun Application.configureRouting() {
         get("/") {
             call.respondText("Hello")
         }
-        get("/html-thymeleaf"){
-            call.respond(ThymeleafContent("index", mapOf("user" to "ThymeleafUser")))
-        }
         get("/tasks") {
-            val tasks = listOf(
-                Task("clean", "clean house", Priority.Low),
-                Task("play", "play with cat", Priority.Vital),
-                Task("shopping", "buy groceries", Priority.Medium)
-            )
-            call.respond(ThymeleafContent("taskss", mapOf("tasks" to tasks)))
+                val tasks = listOf(
+                    Task("clean", "clean house", Priority.Low),
+                    Task("play", "play with cat", Priority.Vital)
+                )
+                val tasksString = Json.encodeToString( tasks)
+                call.respond(tasksString)
         }
         staticResources("/static", "static")
     }

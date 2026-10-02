@@ -1,5 +1,10 @@
 package org.example
 
+import io.ktor.serialization.kotlinx.json.*
+import io.ktor.server.plugins.contentnegotiation.*
+import io.ktor.server.plugins.cors.routing.*
+
+import io.ktor.http.HttpHeaders
 import io.ktor.server.application.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
@@ -10,7 +15,13 @@ fun main() {
 }
 
 fun Application.module() {
-    // If the tutorial had you write a configureThymeleaf() function, uncomment the next line:
-    configureThymeleaf()
+    install(ContentNegotiation) {
+        json()
+    }
+    install(CORS) {
+        anyHost() // Allows your client folder to connect during development
+        allowHeader(HttpHeaders.ContentType)
+    }
+
     configureRouting()
 }
