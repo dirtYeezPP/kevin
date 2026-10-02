@@ -10,8 +10,8 @@ import org.example.model.Task
 
 // Our temporary in-memory database
 val taskStorage = mutableListOf(
-    Task("clean", "clean house", Priority.Low),
-    Task("play", "play with cat", Priority.Vital)
+    Task("clean", "clean house", Priority.Low, "10:00"),
+    Task("play", "play with cat", Priority.Vital, "18:03")
 )
 
 fun Application.configureRouting() {

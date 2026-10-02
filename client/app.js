@@ -12,6 +12,8 @@ fetch('http://localhost:8080/tasks')
             taskDiv.innerHTML = `
                         <h3>${task.name} (Priority: ${task.priority})</h3>
                         <p>${task.description}</p>
+                        <p>${task.time}</p>
+                        
                     `;
             container.appendChild(taskDiv);
         });
@@ -30,7 +32,8 @@ document.getElementById('task-form').addEventListener('submit', function(event) 
     const newTask = {
         name: document.getElementById('task-name').value,
         description: document.getElementById('task-desc').value,
-        priority: document.getElementById('task-priority').value
+        priority: document.getElementById('task-priority').value,
+        time: document.getElementById('task-time').value
     };
 
     // Send the data to Kotlin
