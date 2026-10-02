@@ -1,30 +1,39 @@
 package org.example
 
-import kotlinx.serialization.*
-import kotlinx.serialization.json.*
-
+import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.*
+import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import io.ktor.server.http.content.*
-import kotlinx.serialization.builtins.ListSerializer
-import org.example.model.Task
 import org.example.model.Priority
+import org.example.model.Task
 
+// Our temporary in-memory database
+val taskStorage = mutableListOf(
+    Task("clean", "clean house", Priority.Low),
+    Task("play", "play with cat", Priority.Vital)
+)
 
 fun Application.configureRouting() {
     routing {
         get("/") {
             call.respondText("Hello")
         }
+
+        // Send the list to your JavaScript frontend
         get("/tasks") {
-                val tasks = listOf(
-                    Task("clean", "clean house", Priority.Low),
-                    Task("play", "play with cat", Priority.Vital)
-                )
-                val tasksString = Json.encodeToString( tasks)
-                call.respond(tasksString)
+            call.respond(taskStorage)
         }
-        staticResources("/static", "static")
+
+        // Receive new tasks from your JavaScript frontend
+        post("/tasks") {
+            // Ktor automatically converts the incoming JSON back into a Kotlin Task object
+            val newTask = call.receive<Task>()
+
+            taskStorage.add(newTask)
+
+            // Send a "201 Created" success message back to the client
+            call.respond(HttpStatusCode.Created, newTask)
+        }
     }
 }
